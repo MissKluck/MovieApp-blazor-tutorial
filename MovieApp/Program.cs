@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using MovieApp.Components;
 using MovieApp.DataAccess;
 using MovieApp.GraphQL;
@@ -29,6 +30,21 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Check to see if the folder 'Poster' exists in the root level of the project, if it doesn't, create it
+var FileProviderPath = app.Environment.ContentRootPath + "/Poster";
+
+if (!Directory.Exists(FileProviderPath))
+{
+    Directory.CreateDirectory(FileProviderPath);
+}
+
+// Navigate through the Poster folder and read the contents from it with the use of UseFileServer --> if poster image is not added, a default image is used
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(FileProviderPath),
+    RequestPath = "/Poster",
+    EnableDirectoryBrowsing = true
+});
 
 app.UseAntiforgery();
 
