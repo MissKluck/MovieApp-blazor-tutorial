@@ -29,7 +29,7 @@ public partial class Movie
     public decimal? Rating { get; set; }
 
     // Optional property
-    public string? Posterpath { get; set; }
+    public string? PosterPath { get; set; }
 
     public Movie()
     {
