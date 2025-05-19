@@ -5,6 +5,7 @@ using MovieApp.DataAccess;
 using MovieApp.GraphQL;
 using MovieApp.Interfaces;
 using MovieApp.model;
+using MovieApp.Server.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddPooledDbContextFactory<MovieDbContext>(options => options.Us
 
 builder.Services.AddScoped<IMovie, MovieDataAccessLayer>();
 
-builder.Services.AddGraphQLServer().AddQueryType<MovieQueryResolver>();
+builder.Services.AddGraphQLServer().AddQueryType<MovieQueryResolver>().AddMutationType<MovieMutationResolver>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
